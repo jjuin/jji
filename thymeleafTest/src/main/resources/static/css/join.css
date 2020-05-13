@@ -1,0 +1,126 @@
+#m5 > a{
+	color: #fff !important;
+}
+ .c1{
+ 	font-weight:bold;
+ }
+ tr{
+ 	padding:5px;
+ 	border-style:solid;
+ 	border-width:0.3px 0px 0.3px 0px;
+ }
+ td{
+ 	padding:20px;
+ }
+ .input{
+ 	width:50%;
+ }
+ .input2{
+ 	width:25%;
+ }
+ #table-re{
+ 	width:80%;
+ 	margin:auto;
+ }
+ .hidden1{
+ 	display:none;
+ }
+ @media ( max-width: 480px ) {
+	.c1{
+		display:none;
+	 }
+	 td{
+	 	padding:10px;
+	 }
+	 #table-re{
+		width:100%;
+		margin:auto;
+	 }
+	 colgroup{
+	 	display:none;
+	 }
+	 .input{
+	 	width:100%;
+	 }
+	 .input2{
+	 	width:25%;
+	 }
+	 tr{
+	 	padding:5px;
+	 	border-width:0;
+	 }
+	 .hidden1{
+	 	display:block;
+	 }
+ }
+ 
+ 
+ #weatherjisu {
+		font-weight: bold;
+		text-align:center;
+		color:#000;
+		font-size:30px;
+	}
+	
+	#idck{
+		color:#EA9215;
+		border-radius:0px;
+		padding:3px;
+		text-align:center;
+	
+		border:0;
+		background-color:white;
+	}
+	
+	#idck:hover{
+		color:white;
+		border-radius:0px;
+		border:0;
+		background-color:burlywood;
+		
+	}
+	
+	#cus_note{
+		border:hidden;
+	}
+	
+	#btnJoin{
+		width:150px;
+		text-align:center;
+	}
+	
+	 #selectEmail{
+	 	height:33px;
+	 }
+	
+input{
+			width: 100%;
+			margin: 5px 0;
+			box-sizing: border-box;
+		}
+		input[type="text"], input[type="password"], #selectEmail, #cus_phone1 {
+			border: solid 2px #FFE4B5;
+			-webkit-transition: 0.5s;
+			transition: 0.5s;
+			outline: none;
+		}
+		input[type="text"]:focus { border: solid 2px burlywood; }
+		input[type="password"]:focus { border: solid 2px burlywood; }
+		#selectEmail:focus{ border: solid 2px burlywood; 
+												color:white;
+												background-color:burlywood;}
+												
+#table-re{
+	border-top:1px solid #FDD9B5;
+	border-bottom:hidden;
+}
+
+tr{
+	border-bottom:1px solid #FDD9B5;
+}
+
+input[type=button]{
+	text-align:center;
+	border-color:burlywood;
+	background-color:burlywood;
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$("#btnLogin").click(function(){
+			alert("버튼 클릭");
+			
+			var cus_id = $.trim($("#cus_id").val());
+			var cus_pw = $.trim($("#cus_pw").val());
+			
+			if(cus_id == ""){
+				alert("아이디를 입력하세요.");
+				$("#cus_id").focus(); //포커스 이동
+				return;
+			}
+			if(cus_pw == ""){
+				alert("비밀번호를 입력하세요.");
+				$("#cus_pw").focus(); //포커스 이동
+				return;
+			}
+
+			$.ajax({
+				type: "post",
+				url: "/member/loginCheck",
+				data: {"cus_id":cus_id, "cus_pw":cus_pw},	
+				dataType: "text",
+				success: function(result){
+					if(result == "false"){
+						alert("아이디 혹은 비밀번호가 일치하지않습니다. 다시 확인해주세요.");
+						return;
+					}
+					else{
+						alert("로그인되었습니다.");
+				
+						//폼 내부의 데이터 전송할 주소
+						document.login_form.action = "/member/main";
+						//제출
+						document.login_form.submit();
+					}
+				}
+			});//ajax
+		});//로그인 버튼	
+		
+		//상품메인 버튼
+		$("#btnProduct").click(function(){
+			alert("상품메인으로 넘어갑니다.");
+			
+			//폼 내부의 데이터 전송할 주소
+			document.login_form.action = "/product/main";
+			//제출
+			document.login_form.submit();
+			
+		});
+	});
+
+</script>
+
+</head>
+<body>
+<h2>로그인</h2>
+<form name = "login_form" id = "login_form" action = "" method = "post">
+	<table border = "1" width = "400px">
+		<tr>
+			<td>아이디</td>
+			<td><input type = "text" name = "cus_id" id = "cus_id" /></td>
+		</tr>
+		<tr>
+			<td>비밀번호</td>
+			<td><input type = "password" name = "cus_pw" id = "cus_pw" /></td>
+		</tr>
+		<tr>
+			<td colspan = "2" align = "center">
+				<input type = "button" name = "btnLogin" id = "btnLogin" value = "로그인"/>
+				<input type = "button" name = "btnProduct" id = "btnProduct" value = "상품메인"/>
+			</td>
+		</tr>
+	</table>
+</form>
+</body>
+</html>
