@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품페이지</title>
+<style>
+	img {width:200px;}
+</style>
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$("#reset").click(function(){
+			alert("초기화");
+			$(".checkbox1").prop("checked", false); //해당 클래스의 checkbox 모두 초기화
+			$(".checkbox2").prop("checked", false); //해당 클래스의 checkbox 모두 초기화
+		});
+
+		$("#btnSearch").click(function(){
+			
+			var searchOption = [];
+			var priceSearchOptionCD = [];
+			
+			
+			if($("#all").is(":checked") == true){
+				searchOption.push($("#all").val());
+			    console.log("all 체크된 상태");
+			    console.log($("#all").val());
+			}
+			else{
+				if($("#makeup").is(":checked") == true){
+					searchOption.push($("#makeup").val());
+					console.log("makeup 체크된 상태");
+				}
+				if($("#digital").is(":checked") == true){
+					searchOption.push($("#digital").val());
+					console.log("digital 체크된 상태");
+				}
+				if($("#bag").is(":checked") == true){
+					searchOption.push($("#bag").val());
+					console.log("bag 체크된 상태");
+				}
+			}
+			
+			
+			if($("#price1").is(":checked") == true){
+				priceSearchOptionCD.push($("#price1").val());
+			    console.log($("#price1").val());
+			}
+			if($("#price2").is(":checked") == true){
+				priceSearchOptionCD.push($("#price2").val());
+			    console.log($("#price2").val());
+			}
+			if($("#price3").is(":checked") == true){
+				priceSearchOptionCD.push($("#price3").val());
+			    console.log($("#price3").val());
+			}
+			if($("#price4").is(":checked") == true){
+				priceSearchOptionCD.push($("#price4").val());
+			    console.log($("#price4").val());
+			}
+			if($("#price5").is(":checked") == true){
+				priceSearchOptionCD.push($("#price5").val());
+			    console.log($("#price5").val());
+			}
+			
+			console.log(priceSearchOptionCD.toString());
+			
+			//jQuery 로 ajax 처리시 data 형식 중 배열(array)값을 넘기려면 다음과 같이 ajax 처리 전 세팅값을 바꿔 주어야 한다
+			jQuery.ajaxSettings.traditional = true;
+
+			
+			$.ajax({
+				type: "post",
+				url: "/product/main",
+				dataType : "json",
+				data: {"searchOption": searchOption, "priceSearchOptionCD": priceSearchOptionCD},
+				error:function(request,status,error){
+			        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			    },
+			    success : searchListFunction(data)
+			  
+			});
+			
+			function searchListFunction(data){
+				console.log(data.searchOption);
+				
+			}
+			      
+				/* document.productMainForm.action = "/product/main";
+				document.productMainForm.submit();
+			  */
+			alert("검색버튼");
+		});
+		
+	});
+</script>
+</head>
+<body>
+<h1>상품페이지-main</h1>
+<form id = "productMainForm" name = "productMainForm" method="post">
+<h3>상품</h3>
+<table border = "1" width = "700px">
+	<tr>
+		<th>카테고리</th>
+		<td>
+			<li><input type = "checkbox" class = "checkbox1" id = "all" name = "all" value = "all"/>
+			<label for="all">전체</label>
+			</li>
+			<li><input type = "checkbox" class = "checkbox1" id = "makeup" name = "makeup" value ="makeup"/>
+			<label for="makeup">메이크업</label>
+			</li>
+			<li><input type = "checkbox" class = "checkbox1" id = "digital" name = "digital" value ="digital"/>
+			<label for="digital">디지털</label>
+			</li>
+			<li><input type = "checkbox" class = "checkbox1" id = "bag" name = "bag" value = "bag"/>
+			<label for="bag">가방</label>
+			</li>
+		
+		</td>
+	</tr>
+	<tr>
+		<th>가격대</th>
+		<td>
+			<li><input type = "checkbox" class = "checkbox2" id = "price1" value = "1" /><label for = "price1">만원미만</label></li>
+			<li><input type = "checkbox" class = "checkbox2" id = "price2" value = "2" /><label for = "price2">1만원이상~5만원미만</label></li>
+			<li><input type = "checkbox" class = "checkbox2" id = "price3" value = "3" /><label for = "price3">5만원~10만원미만</label></li>
+			<li><input type = "checkbox" class = "checkbox2" id = "price4" value = "4" /><label for = "price4">10만원~30만원미만</label></li>
+			<li><input type = "checkbox" class = "checkbox2" id = "price5" value = "5" /><label for = "price5">30만원이상</label></li>
+		</td>
+		
+	</tr>
+</table>
+<input type = "button" name = "reset" id = "reset" value = "초기화" />
+<input type = "button" name = "btnSearch" id = "btnSearch" value = "검색" />
+
+<div><a href = "newProduct">신상품</a>|
+	<a href = "upPrice">높은가격</a>|
+	<a href = "downPrice">낮은가격</a>
+</div>
+<hr/>
+<div id="list">
+	<table>
+		 <tr>
+	        <th>상품번호</th>
+	        <th>상품명</th>
+	        <th>카테고리</th>
+	        <th>가격</th>
+	    </tr>
+		<tr th:each="product : ${productList}">
+	        <td th:text="${product.prod_no}"></td>
+	        <td th:text="${product.prod_name}"></td>
+	        <td th:text="${product.prod_category_nm}"></td>
+	        <td th:text="${product.prod_price}"></td>
+	    </tr>
+	</table>
+</div>
+<table>
+	<tr th:each="list : ${productList}">
+		<td th:text="${list.prod_no}"><img src = "../../static/images/makeup1.jpg" alt="상품이미지" /></td>
+		<td><img src = "../../static/images/makeup2.jpg" alt="상품이미지" /></td>
+		<td><img src = "../../static/images/makeup3.jpg" alt="상품이미지" /></td>
+		<td><img src = "../../static/images/makeup4.jpg" alt="상품이미지" /></td>
+	</tr>
+	
+	<tr>
+		<td><img src = "../../static/images/digital1.jpg" alt="상품이미지" /></td>
+		<td><img src = "../../static/images/digital5.jpg" alt="상품이미지" /></td>
+		<td><img src = "../../static/images/digital3.jpg" alt="상품이미지" /></td>
+		<td><img src = "../../static/images/digital4.jpg" alt="상품이미지" /></td>
+	</tr>
+	
+	<tr>
+		<td><img src = "../../static/images/bag1.jpg" alt="상품이미지" /></td>
+		<td><img src = "../../static/images/bag2.jpg" alt="상품이미지" /></td>
+		<td><img src = "../../static/images/bag3.jpg" alt="상품이미지" /></td>
+		<td><img src = "../../static/images/bag4.jpg" alt="상품이미지" /></td>
+	</tr>
+
+</table>
+</form>
+</body>
+</html>

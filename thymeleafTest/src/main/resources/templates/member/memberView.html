@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Thymeleaf 예제</title>
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+$(document).ready(function(){
+
+	$("#btnDelete").click(function(){
+		//폼 내부의 데이터 전송할 주소
+		document.form1.action = "${path}/test/proj/member/delete.do?";
+		//제출
+		document.form1.submit();
+		});
+
+	$("#btnUpdate").click(function(){
+		alert("클릭!");
+	
+		//폼 내부의 데이터 전송할 주소
+		document.form1.action = "${path}/test/proj/member/update.do";
+		//제출
+		document.form1.submit();
+		});
+	});
+
+</script>
+</head>
+<body>
+<h2>회원 상세정보</h2>
+<form name = "form1" method = "post">
+	<table border = "1" width = "400px">
+		<tr>
+			<td>번호</td>
+			<td><input type = "text" name = "ori_no" id = "ori_no" value = "${view.ori_no}" readonly = "readonly"></td>
+		</tr>
+		<tr>
+			<td>아이디</td>
+			<td><input type = "text" name = "cus_id" id = "cus_id" value = "${view.cus_id}" readonly = "readonly"></td>
+		</tr>
+		<tr>
+			<td>비밀번호</td>
+			<td><input type = "password" name = "cus_pw" id = "cus_pw"></td>
+		</tr>
+		<tr>
+			<td>이름</td>
+			<td><input type ="text" name = "cus_name" id = "cus_name" value ="${view.cus_name}"></td>
+		</tr>
+		<tr>
+			<td colspan = "2" align="center">
+				<input type = "button" value = "수정" id = "btnUpdate">
+				<input type = "button" value = "삭제" id = "btnDelete">
+			</td>
+		</tr>
+		
+	</table>
+</form>
+
+</body>
+</html>
