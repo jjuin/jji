@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.example.spring.test.BookDAO"> 
+<!-- mybatis-confg.xml 에 Alias 되어 있습니다. --> 
+	<select id="readBookAll" resultType="com.example.spring.test.BookDTO"> 
+		SELECT
+           BOOK_NO,
+           TITLE,
+           CREATOR,
+           PUBLISHER,
+           PUBLISHEDYEAR
+		FROM
+			BOOK
+	</select>
+	
+	<insert id = "createBook" parameterType = "com.example.spring.test.BookDTO">
+		INSERT INTO BOOK
+		VALUES(
+			BOOK_SEQ.NEXTVAL,
+			#{title},
+			#{creator},
+			#{publisher},
+			#{publishedYear}
+		)
+	</insert>
+
+	
+</mapper> 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품페이지</title>
+<style>
+	img {width:200px;}
+</style>
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+	$(document).ready(function(){
+		var session_id = "${session_id}";
+		
+		console.log("session_id = >"+session_id);
+		
+		var bno = 0; //게시글 번호
+		
+	});
+</script>
+</head>
+<body>
+<h1>게시판 목록</h1>
+<form id = "boardListForm" name = "boardListForm" method="post">
+	<table border = "1" style="width:70%">
+		<tr>
+			<th>번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>작성일</th>
+			<th>조회수</th>
+		</tr>
+		
+		<tr th:each="list : ${list}">
+			<td th:text="${list.RNUM}">
+			<td th:text="${list.TITLE}">	
+			<td th:text="${list.WRITER}">
+			<td th:text="${list.REGDATE}">
+			<td th:text="${list.VIEWCNT}">
+		</tr>	
+		<tr>
+			<td colspan = "5">
+				<a th:href = "@{/board/list(page=1)}">&lt;&lt;</a>
+				&nbsp;<a th:href = "@{list(page=${navi.startPageGroup-1})}">&lt;</a>				
+			<!-- </td>여기까지는 괜춘 -->
+			<span th:each = "count : ${#numbers.sequence({navi.startPageGroup}, {navi.endPageGroup})}" >
+				<a th:href = "@{/board/list(page=${count})}"><span th:text="${count}">count</span></a>
+			</span>
+			<!-- <td> --> 
+				<a th:href = "@{/board/list(page=${navi.endPageGroup+1})}">&gt;</a>
+				&nbsp;<a th:href = "@{list(page=${navi.totalRecordsCount})}">&gt;&gt;</a>				
+			</td>
+		</tr>
+	</table>
+</form>
+</body>
+</html>
