@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html 	xmlns = "http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title -->
+    <title>Akame - JOINSUCCESS</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../static/images/core-img/favicon.ico">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../static/style.css">
+    <link rel="stylesheet" href="../../static/css/join.css">
+    
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>    
+<script>
+	$(document).ready(function(){
+		
+		$("#btnIndex").click(function(){ //홈버튼
+			alert("홈으로 이동합니다.");
+			//location.replace("/project/index");
+			location.href = "/project/index";
+		});
+		
+		$("#btnLogin").click(function(){ //로그인 버튼
+			alert("로그인 페이지로 이동합니다.");
+			location.href = "/project/member/loginForm";
+		});
+		
+	});
+</script>
+
+</head>
+
+<body>
+  <div th:include="include/subHeader" ></div>
+
+	<!-- 내용 추가 -->
+	<form id="jFrm" action="" method="post">
+		<h3 style="text-align:center; margin-top:3%;">JOIN</h3>
+		<!-- <p align="center"><span style="color:red;">V</span>&nbsp;표시는 필수 입력항목</p> -->
+		<div style="overflow-x:auto; text-align:center;">
+		<table id="table-re">		
+			<tr>
+				<td colspan = "2">회원가입이 완료되었습니다!</td>
+			</tr>
+			<tr>
+				<td><input type="button" id="btnLogin" name="btnLogin" value="LOGIN" /></td>
+				<td><input type="button" id="btnIndex" name="btnIndex" value="HOME"></td>
+			</tr>
+		</table>
+		</div>
+	</form>		 
+
+ 
+  <div th:include="include/subFooter" ></div>
+
+</body>
+
+</html>

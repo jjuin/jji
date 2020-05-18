@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.example.spring.project.member.ProjMemberDAO"> 
+<!-- mybatis-confg.xml 에 Alias 되어 있습니다. --> 
+	<select id = "selectId" resultType = "int"
+							parameterType = "com.example.spring.project.member.ProjMemberDTO">
+			SELECT COUNT(*)
+			FROM PROJ_MEMBER
+			WHERE CUS_ID = #{cus_id} AND CUS_PW = #{cus_pw}		
+	</select>
+
+	<select id="selectUser" resultType = "com.example.spring.project.member.ProjMemberDTO"
+							parameterType = "String"> 
+		SELECT  
+				CUS_NO,			<!-- 회원번호 -->
+				CUS_NAME,		<!-- 회원이름 -->
+				CUS_ID,			<!-- 회워ID -->
+				CUS_PW,			<!-- 회원비번 -->
+				CUS_PHONE,		<!-- 폰번호 전체 -->
+				CUS_PHONE1,		<!-- 010.. -->
+				CUS_PHONE2,		<!-- 2222.. -->
+				CUS_PHONE3,		<!-- 3333.. -->
+				CUS_GENDER,		<!-- 성별 -->
+				CUS_EMAIL,		<!-- 이메일 전체 -->
+				CUS_EMAIL1,		<!-- 앞부분 -->
+				CUS_EMAIL2,		<!-- NAVER.. -->
+				CUS_HIREDATE,	<!-- 회원 가입일 -->
+				CUS_UPDATEDATE,	<!-- 회원정보 수정일 -->
+				CUS_OUT,		<!-- 회원 탈퇴일 -->
+				CUS_GRADE_CD	<!-- 회원등급코드 -->
+		FROM PROJ_MEMBER
+		WHERE CUS_ID = #{cus_id}
+	</select>
+
+	
+</mapper> 

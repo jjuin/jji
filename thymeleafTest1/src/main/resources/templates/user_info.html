@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Thymeleaf 예제</title>
+
+</head>
+<body> 
+	<h2>Hello!ㅎㅎ</h2> 
+	<table border = "1" width="500px">
+		<tr>
+			<td>번호</td>
+			<td>이름</td>
+			<td>id</td>
+			<td>비밀번호</td>
+		</tr>
+		<tr th:each="list : ${userList}">
+			<td th:text="${list.u_no}"></td>
+			<td th:text="${list.user_name}"></td>
+			<td th:text="${list.user_id}"></td>
+			<td th:text="${list.user_pw}"></td>
+		</tr>
+	</table>
+</body>
+
+</html>
