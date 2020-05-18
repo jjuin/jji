@@ -100,7 +100,7 @@ public class ProjMemberController {
 	}
 	
 	//인터셉터처리
-	@RequestMapping(value = "needLogin", method = RequestMethod.GET)
+	@RequestMapping("needLogin")
 	public String needLogin(Model model) throws Exception{
 		String login_interceptor = "로그인 후 이용해 주시기 바랍니다."; //로그인 인터셉터 처리
 		//ModelAndView mav = new ModelAndView();
