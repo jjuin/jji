@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>상품배치 List</title>
+	<style>
+		table{
+			margin-top:150px;
+			margin-left:auto;
+			margin-right:auto;
+			font-size:14pt; 
+			width:50%;
+			border : 1px solid black;
+		}
+		td{
+			border: 1px solid black;
+			border-collapse : separate;
+		}
+		.title_td{
+			background-color:gray;
+		}
+		#backDiv{
+			text-align:center;
+			margin-top: 10px;
+		}
+		#backBtn{
+			width:100px;
+			height:30px;
+			font-size:12pt;
+		}
+	</style>
+	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script> 
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+		infoDetailProc(); 
+		
+		$("#backBtn").click(function(){//목록보기
+			location.href = "/project/batchList";
+		});
+	});
+	
+	function infoDetailProc(){ //상품배치 데이터불러오기
+		var html = "";
+		var no = [[${no}]];
+		var title_list = ["업무구분", "공통코드", "배치ID", "Call URL", "Job Schedule", "ERP 연동여부", "중계 DB사용여부", "인터페이스ID", "프로그램위치", "요약", "상세설명", "비고"];
+		console.log(title_list);
+		var test_cnt = 2;
+		$.ajax({
+			url : "/project/batchInfoDetail",
+			type : "POST",
+			data : {"no":no},
+			error : function(){
+				alert("상세 data 불러오기에서 error");
+			},
+			success : function(resultList){
+				console.log(resultList);
+				
+				for(var i = 0; i<resultList.length; i++){ //가져온 상세 data출력
+					
+					html +="<tr>"
+							+"<td class = \"title_td\">"+title_list[i]+"</td>"
+							+"<td>"+resultList[i]+"</td>"
+							+"</tr>";
+				}
+				$("#dataList").append(html);
+			}
+		});
+	}	//infoDetailProc
+	
+	</script>
+</head>
+<body>
+<form id = "batchInfoListFrm" name= "batchInfoListFrm">
+	<table id ="dataList">
+	<colgroup>
+		<col width="25%">
+		<col width="75%">
+	</colgroup>
+	</table> 
+	<div id = "backDiv"><input type ="button" id = "backBtn" name = "bachBtn" value = "목록보기" /></div>
+</form>
+</body>
+</html>

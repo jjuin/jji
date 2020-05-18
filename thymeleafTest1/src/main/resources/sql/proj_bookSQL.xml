@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.example.spring.project.book.ProjBookDAO"> 
+<!-- mybatis-confg.xml 에 Alias 되어 있습니다. --> 
+	<!-- <select id = "selectId" resultType = "int"
+							parameterType = "com.example.spring.project.member.ProjMemberDTO">
+			SELECT COUNT(*)
+			FROM PROJ_MEMBER
+			WHERE CUS_ID = #{cus_id} AND CUS_PW = #{cus_pw}		
+	</select> -->
+
+	<!-- 예약정보확인 -->
+	<select id="selectBookInfo" resultType = "com.example.spring.project.book.ProjBookDTO"
+							parameterType = "String"> 
+		SELECT  
+				B.BOOK_NO,			<!-- 예약번호 -->
+				B.CUS_NO,				<!-- 회원번호 -->
+				B.CUS_NAME,			<!-- 회워이름 -->
+				B.BOOK_REGDATE,		<!-- 예약일 -->
+				B.SERVICE_NAME,		<!-- 시술명 -->
+				B.EMP_NO,			<!-- 사원번호 -->
+				E.EMP_NAME			<!-- 사원이름 -->
+		FROM PROJ_BOOK B INNER JOIN PROJ_EMPLOYEE E
+		ON B.EMP_NO = E.EMP_NO
+		WHERE B.CUS_NO = (SELECT CUS_NO 
+						FROM PROJ_MEMBER
+						WHERE CUS_ID = #{cus_id})
+						AND 
+						<!--EMP_NAME = (SELECT EMP_NAME 
+								FROM PROJ_EMPLOYEE
+								WHERE EMP_NO = #{emp_no})  여기에서 emp_no는 예약테이블에서 가져온 emp_no
+						AND -->
+						B.BOOK_REGDATE BETWEEN TO_CHAR(SYSDATE,'YYYY-MM-DD')
+						AND TO_CHAR(SYSDATE+14,'YYYY-MM-DD')
+		ORDER BY B.BOOK_REGDATE DESC
+	</select>
+	
+	<!-- 예약하기 -->
+	<insert id="bookInsert" parameterType = "com.example.spring.project.book.ProjBookDTO">
+		INSERT INTO PROJ_BOOK
+		VALUES(PROJ_BOOK_SEQ.NEXTVAL, 
+				16, <!-- 이거는 그냥 임시로 넣어둠.-> 나중에 로그인 session확인해서 예약처리 -->
+				#{cus_name},
+				#{book_date},
+				sysdate,
+				#{service_name},
+				#{emp_no},
+				#{work_time_cd}
+				)
+	</insert>
+	
+	<!-- 예약하기-사원일시간표 업데이트 -->
+	<update id = "updateWorkTime" parameterType = "com.example.spring.project.book.ProjBookDTO">
+		UPDATE PROJ_WORK_TIME
+		  SET WORK_TIME_ISSHOW = 'N'
+		  WHERE EMP_NO = #{emp_no} AND WORK_TIME_CD = #{work_time_cd}
+	</update>
+	
+	<!-- 직업정보 불러오기 -->
+	<select id="selectEmpInfo" resultType = "com.example.spring.project.ProjEmpDTO">
+		SELECT  
+				EMP_NO,				<!-- 사원번호 -->
+				EMP_NAME,			<!-- 사원이름 -->
+				EMP_GRADE_CD,		<!-- 직급코드 -->
+				EMP_GRADE_NM		<!-- 직급명 -->
+		FROM PROJ_EMPLOYEE
+	</select>
+	
+	<!-- 직원별 일하는 시간정보 -->
+	<select id="selectEmpWorkTime" resultType = "com.example.spring.project.book.ProjBookDTO"
+									parameterType = "int">
+		SELECT  
+				EMP_NO,				<!-- 사원번호 -->
+				WORK_TIME_CD,		<!-- 일시간코드 -->
+				WORK_TIME,			<!-- 일 시간-->
+				WORK_TIME_ISSHOW	<!-- 일 시간 표출 -->
+		FROM PROJ_WORK_TIME
+		WHERE EMP_NO = #{emp_no}
+	</select>
+	
+</mapper> 
